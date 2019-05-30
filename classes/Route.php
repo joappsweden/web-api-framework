@@ -18,7 +18,7 @@ class Route
     $this->url = explode('/', explode('?', trim($_SERVER['REQUEST_URI'], '/'))[0]);
     $this->method = strtolower($_SERVER['REQUEST_METHOD']);
     $this->controller = $controller;
-    $this->data = json_decode(file_get_contents('php://input'), false);
+    $this->data = json_decode(file_get_contents('php://input'), true);
 
     if ($this->isControllerCorrect($this->url, $this->controller)) {
       $this->database = new Database();
@@ -32,6 +32,7 @@ class Route
       $this->isControllerCorrect($this->url, $this->controller) &&
       $this->doesKeyExists($accept, $this->data) &&
       isset($this->url[0]) &&
+      !isset($this->url[1]) &&
       $this->database != NULL
     ) {
       echo $this->database->create($this->url[0], $this->data);

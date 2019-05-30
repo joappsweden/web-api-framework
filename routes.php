@@ -38,4 +38,10 @@ $post->get([
   'body'
 ]);
 
+$post->post([
+  'title',
+  'photo',
+  'body'
+]);
+
 ?>
