@@ -33,7 +33,10 @@ class Database
     $statement = $this->connection->prepare($sql);
     $result = $statement->execute($data);
 
-    if (strpos(strtolower($sql), 'select') !== false) {
+    if (
+      strpos(strtolower($sql), 'select') !== false ||
+      strpos(strtolower($sql), 'describe') !== false
+    ) {
       return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 

@@ -1,12 +1,8 @@
 Web API framework
 Klasser & funktioner
 
-Database
-- Query
-
 DatabaseHelper
 - Synkronisera tabel
-- Create
 - Read by search condition
 - Read by exact condition
 - Read by id or index

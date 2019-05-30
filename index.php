@@ -6,10 +6,12 @@ include_once './library/GetHeader.php';
 include_once './library/Request.php';
 include_once './library/Response.php';
 include_once './library/Database.php';
+include_once './library/DatabaseHelper.php';
 
 SetTimezone();
 
-$db = new Database();
+$dbh = new DatabaseHelper();
+$dbh->selectAll('user', ['email', 'token', 'role']);
 
 /*
 $env = Environment('mysql.host');
