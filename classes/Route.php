@@ -33,7 +33,8 @@ class Route
       $this->doesKeyExists($accept, $this->data) &&
       isset($this->url[0]) &&
       !isset($this->url[1]) &&
-      $this->database != NULL
+      $this->database != NULL &&
+      $this->isAllowed($roles)
     ) {
       echo $this->database->create($this->url[0], $this->data);
     }
@@ -45,7 +46,8 @@ class Route
       $this->method === 'get' &&
       $this->isControllerCorrect($this->url, $this->controller) &&
       isset($this->url[0]) &&
-      $this->database != NULL
+      $this->database != NULL &&
+      $this->isAllowed($roles)
     ) {
       if (isset($this->url[1])) {
         echo $this->database->read($this->url[0], $this->url[1], $accept);
@@ -63,7 +65,8 @@ class Route
       $this->doesKeyExists($accept, $this->data) &&
       isset($this->url[0]) &&
       isset($this->url[1]) &&
-      $this->database != NULL
+      $this->database != NULL &&
+      $this->isAllowed($roles)
     ) {
       echo $this->database->update($this->url[0], $this->data, $this->url[1]);
     }
@@ -76,7 +79,8 @@ class Route
       $this->isControllerCorrect($this->url, $this->controller) &&
       isset($this->url[0]) &&
       isset($this->url[1]) &&
-      $this->database != NULL
+      $this->database != NULL &&
+      $this->isAllowed($roles)
     ) {
       echo $this->database->delete($this->url[0], $this->url[1]);
     }
@@ -111,6 +115,67 @@ class Route
   private function isControllerCorrect($url, $controller)
   {
     return in_array($controller, $url);
+  }
+
+  private function isAllowed($roles)
+  {
+    if (count($roles) > 0) {
+      if ($this->database != null) {
+        $sql = "SELECT * FROM user WHERE token = :token";
+        $sqlData = [
+          "token" => $this->getTokenFromHeader()
+        ];
+
+        $result = json_decode($this->database->query($sql, $sqlData));
+
+        if (count($result) > 0) {
+          if (isset($result[0]->role) && in_array($result[0]->role, $roles)) {
+            return true;
+          }
+        }
+
+        return false;
+      }
+    } else {
+      return true;
+    }
+  }
+
+  private function getTokenFromHeader()
+  {
+    foreach (getallheaders() as $name => $value) {
+      if (strtolower($name) === 'token') {
+        return $value;
+      }
+    }
+  }
+
+  public function getToken()
+  {
+    if (isset($this->url[0]) && $this->url[0] === 'token') {
+      if (isset($this->data['email']) && isset($this->data['password'])) {
+        $sql = "SELECT * FROM user WHERE email = :email AND password = :password";
+        $sqlData = [
+          "email" => $this->data['email'],
+          "password" => sha1($this->data['password'])
+        ];
+        $database = new Database();
+        $result = json_decode($database->query($sql, $sqlData));
+        $id = $result[0]->id;
+
+        $token = sha1($id.date('YmdHis').rand(100,999));
+        $sql = "UPDATE user SET token = :token WHERE id = :id";
+        $sqlData = [
+          "token" => $token,
+          "id" => $id
+        ];
+        $gotToken = $database->query($sql, $sqlData);
+
+        if ($gotToken === true) {
+          echo json_encode($token);
+        }
+      }
+    }
   }
 }
 

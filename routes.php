@@ -4,6 +4,7 @@ include_once 'classes/Route.php';
 
 // USER
 $user = new Route('user');
+$user->getToken();
 
 $user->get([
   'email'

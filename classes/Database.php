@@ -121,7 +121,7 @@ class Database
     }
   }
 
-  private function query($sql, $data=[])
+  public function query($sql, $data=[])
   {
     $statement = $this->connection->prepare($sql);
     $result = $statement->execute($data);
