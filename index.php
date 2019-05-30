@@ -5,9 +5,13 @@ include_once './library/SetTimezone.php';
 include_once './library/GetHeader.php';
 include_once './library/Request.php';
 include_once './library/Response.php';
+include_once './library/Database.php';
 
 SetTimezone();
 
+$db = new Database();
+
+/*
 $env = Environment('mysql.host');
 $header = GetHeader('host');
 $request = Request('email');
@@ -17,6 +21,8 @@ print_r($env);
 print_r($header);
 print_r($request);
 print_r($response);
+*/
+
 
 /*
 include_once 'schema.php';
