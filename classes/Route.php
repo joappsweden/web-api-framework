@@ -13,12 +13,13 @@ class Route
   private $data;
   private $database;
 
-  function __construct($controller)
+  function __construct($controller, $uniqueKeys=[])
   {
     $this->url = explode('/', explode('?', trim($_SERVER['REQUEST_URI'], '/'))[0]);
     $this->method = strtolower($_SERVER['REQUEST_METHOD']);
     $this->controller = $controller;
     $this->data = json_decode(file_get_contents('php://input'), true);
+    $this->uniqueKeys = $uniqueKeys;
 
     if ($this->isControllerCorrect($this->url, $this->controller)) {
       $this->database = new Database();
@@ -138,6 +139,13 @@ class Route
       }
     } else {
       return true;
+    }
+  }
+
+  private function isUnique()
+  {
+    foreach ($this->uniqueKeys as $keys) {
+      // code...
     }
   }
 
