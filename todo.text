@@ -1,0 +1,53 @@
+Web API framework
+Klasser & funktioner
+
+Database
+- Query
+
+DatabaseHelper
+- Synkronisera tabel
+- Create
+- Read by search condition
+- Read by exact condition
+- Read by id or index
+- Read all
+- Update
+- Delete
+- Count by exact condition
+- Count by search condition
+- Create user table
+- Create super user
+- Read user by username and password -> token
+- Read user by token -> id or index
+- Create file table
+- Create file
+- Read file by token -> path
+- Read file by path -> file
+
+—
+Synkronisera
+1. Hur är det nu?
+2. Hur ska det bli?
+3. Vad är skillnaden?
+4. Lägg till tillägg
+5. Ta bort skillnader
+—
+
+Route (name)
+- Get (fields to show, roles to access)
+- Post (fields to accept, roles to access)
+- Put (fields to accept, roles to access)
+- Delete (roles to access)
+- Token
+- Upload
+
+Model (name, uniques)
+- Key
+- Integer
+- String
+- Email
+- Password
+- File
+- Text
+- Datetime
+- Timestamp
