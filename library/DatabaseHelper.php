@@ -15,7 +15,60 @@ class DatabaseHelper extends Database
   public function syncModelsWithDatabase()
   {
     foreach ($this->models as $model) {
-      print_r($model);
+      if (in_array($model->getName(), $this->getTable())) {
+        $oldTable = $this->getColumn($model->getName());
+        $newTable = $model->getProperties();
+        $oldFields = [];
+        $newFields = [];
+
+        foreach ($oldTable as $field) {
+          $oldFields[] = $field['Field'];
+        }
+
+        foreach ($newTable as $field => $value) {
+          $newFields[] = $field;
+        }
+
+        if (count($oldTable) > count($newTable)) {
+          // Remove columns
+          foreach (array_diff($oldFields, $newFields) as $column) {
+            $this->deleteColumn($model->getName(), $column);
+          }
+        } else {
+          // Create columns
+          foreach (array_diff($newFields, $oldFields) as $column) {
+            $index = 0;
+
+            for ($i=0; $i < count($newFields); $i++) {
+              if ($newFields[$i] == $column && $i > 1) {
+                $index = $i-1;
+              } elseif ($newFields[$i] == $column && $i < 1) {
+                $index = $i+1;
+              }
+            }
+
+            $type = "";
+
+            foreach ($newTable as $field => $value) {
+              if ($field === $column) {
+                $type .= strtoupper($value['type']);
+
+                if (isset($value['characters'])) {
+                  $type .= "(".$value['characters'].")";
+                }
+
+                $type .= ", ";
+              }
+            }
+
+            $type = trim($type, ", ");
+
+            $this->createColumn($model->getName(), $column, $type, $newFields[$index]);
+          }
+        }
+      } else {
+        $this->createTable($model);
+      }
     }
   }
 
@@ -235,6 +288,18 @@ class DatabaseHelper extends Database
     }
   }
 
+  public function createColumn($table, $column, $type, $after)
+  {
+    $sql = "ALTER TABLE $table ADD $column $type AFTER $after";
+    return $this->query($sql);
+  }
+
+  public function deleteColumn($table, $column)
+  {
+    $sql = "ALTER TABLE $table DROP $column";
+    return $this->query($sql);
+  }
+
   private function countByCondition($table, $condition)
   {
     $whereConditions = "";
@@ -267,6 +332,19 @@ class DatabaseHelper extends Database
     }
 
     return $columns;
+  }
+
+  private function getTable()
+  {
+    $sql = "SHOW TABLES";
+    $tables = $this->query($sql);
+    $array = [];
+
+    foreach ($tables as $table) {
+      $array[] = $table['Tables_in_test'];
+    }
+
+    return $array;
   }
 }
 

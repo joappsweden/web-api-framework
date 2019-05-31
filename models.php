@@ -13,7 +13,7 @@ $user->timestamp();
 $post = new Model('post');
 $post->key();
 $post->string('title');
-$post->string('photo');
+$post->file('photo');
 $post->text('body');
 $post->timestamp();
 

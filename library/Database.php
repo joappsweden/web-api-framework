@@ -37,7 +37,8 @@ class Database
 
     if (
       strpos(strtolower($sql), 'select') !== false ||
-      strpos(strtolower($sql), 'describe') !== false
+      strpos(strtolower($sql), 'describe') !== false ||
+      strpos(strtolower($sql), 'show tables') !== false
     ) {
       return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
