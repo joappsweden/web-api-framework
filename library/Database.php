@@ -28,10 +28,10 @@ class Database
     }
   }
 
-  protected function query($sql, $data=[])
+  protected function query($models, $sql, $data=[])
   {
     $statement = $this->connection->prepare($sql);
-    $data = Validation($data);
+    $data = Validation($models, $data);
     $result = $statement->execute($data);
 
     if (

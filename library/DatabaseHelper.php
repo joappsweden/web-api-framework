@@ -101,7 +101,7 @@ class DatabaseHelper extends Database
     $columns = trim($columns, ", ");
 
     $sql = "CREATE TABLE IF NOT EXISTS $table ($columns);";
-    $createTable = $this->query($sql);
+    $createTable = $this->query($this->models, $sql);
 
     Response([
       "result" => $createTable
@@ -126,7 +126,7 @@ class DatabaseHelper extends Database
     $labels = trim($labels, ", ");
 
     $sql = "INSERT INTO $table ($keys) VALUES ($labels);";
-    return  $this->query($sql, $data);
+    return  $this->query($this->models, $sql, $data);
   }
 
   public function selectAll($table, $columns=[])
@@ -144,7 +144,7 @@ class DatabaseHelper extends Database
     }
 
     $sql = "SELECT $selectColumns FROM $table;";
-    return $this->query($sql);
+    return $this->query($this->models, $sql);
   }
 
   public function selectById($table, $id)
@@ -185,7 +185,7 @@ class DatabaseHelper extends Database
     }
 
     $sql = "SELECT $selectColumns FROM $table $whereConditions;";
-    return $this->query($sql, $conditions);
+    return $this->query($this->models, $sql, $conditions);
   }
 
   public function selectBySearchCondition($table, $conditions, $columns=[])
@@ -208,7 +208,7 @@ class DatabaseHelper extends Database
       $conditions[$key] = "%$value%";
     }
 
-    return $this->query($sql, $conditions);
+    return $this->query($this->models, $sql, $conditions);
   }
 
   public function updateById($table, $data, $id)
@@ -257,14 +257,14 @@ class DatabaseHelper extends Database
     }
 
     $sql = "UPDATE $table $settings $whereConditions;";
-    return $this->query($sql, array_merge($data, $conditions));
+    return $this->query($this->models, $sql, array_merge($data, $conditions));
   }
 
   public function deleteById($table, $id)
   {
     if (is_numeric($id)) {
       $sql = "DELETE FROM $table WHERE id = :id;";
-      return $this->query($sql, ['id' => $id]);
+      return $this->query($this->models, $sql, ['id' => $id]);
     } else {
       Response([
         'error' => 'Id is not a number'
@@ -275,13 +275,13 @@ class DatabaseHelper extends Database
   public function createColumn($table, $column, $type, $after)
   {
     $sql = "ALTER TABLE $table ADD $column $type AFTER $after";
-    return $this->query($sql);
+    return $this->query($this->models, $sql);
   }
 
   public function deleteColumn($table, $column)
   {
     $sql = "ALTER TABLE $table DROP $column";
-    return $this->query($sql);
+    return $this->query($this->models, $sql);
   }
 
   private function countByCondition($table, $condition)
@@ -299,7 +299,7 @@ class DatabaseHelper extends Database
     }
 
     $sql = "SELECT COUNT(*) FROM $table $whereConditions";
-    $count = $this->query($sql, $conditions);
+    $count = $this->query($this->models, $sql, $conditions);
 
     return $count[0]['COUNT(*)'];
   }
@@ -307,7 +307,7 @@ class DatabaseHelper extends Database
   private function getColumn($table, $key='')
   {
     $sql = "DESCRIBE $table";
-    $columns = $this->query($sql);
+    $columns = $this->query($this->models, $sql);
 
     foreach ($columns as $column) {
       if ($column['Field'] === $key) {
@@ -321,7 +321,7 @@ class DatabaseHelper extends Database
   private function getTable()
   {
     $sql = "SHOW TABLES";
-    $tables = $this->query($sql);
+    $tables = $this->query($this->models, $sql);
     $array = [];
 
     foreach ($tables as $table) {
