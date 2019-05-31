@@ -346,6 +346,11 @@ class DatabaseHelper extends Database
 
     return $array;
   }
+
+  public function doesTableExists($table)
+  {
+    return in_array($table, $this->getTable());
+  }
 }
 
 

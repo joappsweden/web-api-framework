@@ -2,8 +2,7 @@ Web API framework
 Klasser & funktioner
 
 DatabaseHelper
-- Synkronisera tabel
-- Create table
+// Gör detta i route
 - Create user table
 - Create super user
 - Read user by username and password -> token
@@ -12,15 +11,6 @@ DatabaseHelper
 - Create file
 - Read file by token -> path
 - Read file by path -> file
-
-—
-Synkronisera
-1. Hur är det nu?
-2. Hur ska det bli?
-3. Vad är skillnaden?
-4. Ta bort skillnader
-5. Lägg till tillägg
-—
 
 Route (name)
 - Get (fields to show, roles to access)

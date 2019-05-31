@@ -6,12 +6,14 @@ function Request($key='')
   $data = json_decode(file_get_contents('php://input'), true);
   $array = [];
 
-  foreach ($data as $name => $value) {
-    if ($key === '') {
-      $array[$name] = $value;
-    } else {
-      if ($key === $name) {
-        return $value;
+  if (isset($data)) {
+    foreach ($data as $name => $value) {
+      if ($key === '') {
+        $array[$name] = $value;
+      } else {
+        if ($key === $name) {
+          return $value;
+        }
       }
     }
   }
