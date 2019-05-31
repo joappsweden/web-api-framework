@@ -3,8 +3,7 @@ Klasser & funktioner
 
 DatabaseHelper
 - Synkronisera tabel
-- Count by exact condition
-- Count by search condition
+- Create table
 - Create user table
 - Create super user
 - Read user by username and password -> token

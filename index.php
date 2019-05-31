@@ -11,7 +11,8 @@ include_once './library/DatabaseHelper.php';
 SetTimezone();
 
 $dbh = new DatabaseHelper();
-$dbh->deleteById('user', 3);
+//$dbh->countByCondition('user', ['email' => 'z']);
+$dbh->createTable('hej');
 
 /*
 $env = Environment('mysql.host');

@@ -10,6 +10,11 @@ class DatabaseHelper extends Database
     // code...
   }
 
+  public function createTable($schema)
+  {
+    print_r($schema);
+  }
+
   public function insert($table, $data)
   {
     if ($this->getColumn($table, 'createdAt') !== NULL) {
@@ -68,6 +73,18 @@ class DatabaseHelper extends Database
 
   public function selectByExactCondition($table, $conditions, $columns=[])
   {
+    $selectColumns = "";
+
+    if (count($columns) > 0) {
+      foreach ($columns as $column) {
+        $selectColumns .= "$column, ";
+      }
+
+      $selectColumns = trim($selectColumns, ', ');
+    } else {
+      $selectColumns = "*";
+    }
+
     $whereConditions = "";
 
     if (count($conditions) > 0) {
@@ -167,6 +184,7 @@ class DatabaseHelper extends Database
     if (is_numeric($id)) {
       $sql = "DELETE FROM $table WHERE id = :id;";
       $delete = $this->query($sql, ['id' => $id]);
+
       Response([
         'result' => $delete
       ]);
@@ -175,6 +193,26 @@ class DatabaseHelper extends Database
         'error' => 'Id is not a number'
       ]);
     }
+  }
+
+  private function countByCondition($table, $condition)
+  {
+    $whereConditions = "";
+
+    if (count($conditions) > 0) {
+      $whereConditions = "WHERE ";
+
+      foreach ($conditions as $key => $value) {
+        $whereConditions .= "$key = :$key, ";
+      }
+
+      $whereConditions = trim($whereConditions, ", ");
+    }
+
+    $sql = "SELECT COUNT(*) FROM $table $whereConditions";
+    $count = $this->query($sql, $conditions);
+
+    return $count[0]['COUNT(*)'];
   }
 
   private function getColumn($table, $key='')
