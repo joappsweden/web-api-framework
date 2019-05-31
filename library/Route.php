@@ -45,7 +45,11 @@ class Route
       if (Method() === 'post') {
         if ($this->dbh->doesTableExists($this->controller)) {
           if (count($this->data) > 0) {
-            echo 'post';
+            $post = $this->dbh->insert($this->controller, $this->data);
+
+            Response([
+              'result' => $post
+            ]);
           } else {
             Response([
               'error' => 'No data'
@@ -70,9 +74,17 @@ class Route
       if (Method() === 'get') {
         if ($this->dbh->doesTableExists($this->controller)) {
           if (isset($this->id)) {
-            echo 'get id';
+            $get = $this->dbh->selectById($this->controller, $this->id);
+
+            Response([
+              'result' => $get
+            ]);
           } else {
-            echo 'get';
+            $get = $this->dbh->selectAll($this->controller);
+
+            Response([
+              'result' => $get
+            ]);
           }
         } else {
           Response([
@@ -94,7 +106,11 @@ class Route
         if ($this->dbh->doesTableExists($this->controller)) {
           if (isset($this->id)) {
             if (count($this->data) > 0) {
-              echo 'put';
+              $put = $this->dbh->updateById($this->controller, $this->data, $this->id);
+
+              Response([
+                'result' => $put
+              ]);
             } else {
               Response([
                 'error' => 'No data'
@@ -120,7 +136,11 @@ class Route
       if (Method() === 'delete') {
         if ($this->dbh->doesTableExists($this->controller)) {
           if (isset($this->id)) {
-            echo 'delete';
+            $delete = $this->dbh->deleteById($this->controller, $this->data);
+
+            Response([
+              'result' => $delete
+            ]);
           }
         } else {
           Response([

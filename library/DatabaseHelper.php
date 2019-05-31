@@ -224,6 +224,10 @@ class DatabaseHelper extends Database
 
   public function updateByConditions($table, $data, $conditions)
   {
+    if ($this->getColumn($table, 'updatedAt') !== NULL) {
+      $data['updatedAt'] = date('Y-m-d H:i:s');
+    }
+
     $settings = "";
 
     if (count($data) > 0) {
