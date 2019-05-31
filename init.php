@@ -12,6 +12,7 @@ include_once './library/DatabaseHelper.php';
 include_once './library/Model.php';
 include_once './library/Route.php';
 include_once './library/Url.php';
+include_once './library/Validation.php';
 
 SetTimezone();
 
