@@ -5,14 +5,54 @@
  */
 class DatabaseHelper extends Database
 {
-  public function syncTables()
+  private $models;
+
+  public function addModel(Model $model)
   {
-    // code...
+    $this->models[] = $model;
   }
 
-  public function createTable(Model $schema)
+  public function syncModelsWithDatabase()
   {
-    print_r($schema);
+    foreach ($this->models as $model) {
+      print_r($model);
+    }
+  }
+
+  public function createTable(Model $model)
+  {
+    $table = $model->getName();
+    $properties = $model->getProperties();
+
+    $columns = "";
+
+    foreach ($properties as $name => $property) {
+      $columns .= "$name";
+      $columns .= " ".strtoupper($property['type']);
+
+      if (isset($property['characters'])) {
+        $columns .= "(".$property['characters'].")";
+      }
+
+      if (isset($property['autoIncrement']) && $property['autoIncrement']) {
+        $columns .= " AUTO_INCREMENT";
+      }
+
+      if (isset($property['primaryKey']) && $property['primaryKey']) {
+        $columns .= " PRIMARY KEY";
+      }
+
+      $columns .= ", ";
+    }
+
+    $columns = trim($columns, ", ");
+
+    $sql = "CREATE TABLE IF NOT EXISTS $table ($columns);";
+    $createTable = $this->query($sql);
+
+    Response([
+      "result" => $createTable
+    ]);
   }
 
   public function insert($table, $data)

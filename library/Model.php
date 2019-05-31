@@ -40,7 +40,7 @@ class Model
       'property' => 'key'
     ];
 
-    $this->properties['key_hashed'] = [
+    $this->properties['id_hashed'] = [
       'type' => 'varchar',
       'characters' => 40,
       'property' => 'key_hashed'
