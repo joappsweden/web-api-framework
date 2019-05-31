@@ -7,12 +7,20 @@ include_once './library/Request.php';
 include_once './library/Response.php';
 include_once './library/Database.php';
 include_once './library/DatabaseHelper.php';
+include_once './library/Model.php';
 
 SetTimezone();
 
 $dbh = new DatabaseHelper();
-//$dbh->countByCondition('user', ['email' => 'z']);
-$dbh->createTable('hej');
+
+$user = new Model('user', ['email']);
+$user->key();
+$user->email('email');
+$user->password('password');
+$user->string('token', 40);
+$user->timestamp();
+
+$dbh->createTable($user);
 
 /*
 $env = Environment('mysql.host');

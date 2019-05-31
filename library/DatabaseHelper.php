@@ -10,7 +10,7 @@ class DatabaseHelper extends Database
     // code...
   }
 
-  public function createTable($schema)
+  public function createTable(Model $schema)
   {
     print_r($schema);
   }
