@@ -3,8 +3,6 @@ Klasser & funktioner
 
 DatabaseHelper
 - Synkronisera tabel
-- Update
-- Delete
 - Count by exact condition
 - Count by search condition
 - Create user table

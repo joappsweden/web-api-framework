@@ -11,7 +11,7 @@ include_once './library/DatabaseHelper.php';
 SetTimezone();
 
 $dbh = new DatabaseHelper();
-$dbh->selectBySearchCondition('user', ['role' => 'ad']);
+$dbh->deleteById('user', 3);
 
 /*
 $env = Environment('mysql.host');
