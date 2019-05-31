@@ -3,10 +3,6 @@ Klasser & funktioner
 
 DatabaseHelper
 - Synkronisera tabel
-- Read by search condition
-- Read by exact condition
-- Read by id or index
-- Read all
 - Update
 - Delete
 - Count by exact condition

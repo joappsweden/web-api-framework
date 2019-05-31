@@ -31,6 +31,8 @@ class Database
   protected function query($sql, $data=[])
   {
     $statement = $this->connection->prepare($sql);
+
+    // TODO: Filter data
     $result = $statement->execute($data);
 
     if (

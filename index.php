@@ -11,7 +11,7 @@ include_once './library/DatabaseHelper.php';
 SetTimezone();
 
 $dbh = new DatabaseHelper();
-$dbh->selectAll('user', ['email', 'token', 'role']);
+$dbh->selectBySearchCondition('user', ['role' => 'ad']);
 
 /*
 $env = Environment('mysql.host');
