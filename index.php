@@ -1,26 +1,7 @@
 <?php
 
-include_once './library/Environment.php';
-include_once './library/SetTimezone.php';
-include_once './library/GetHeader.php';
-include_once './library/Request.php';
-include_once './library/Response.php';
-include_once './library/Database.php';
-include_once './library/DatabaseHelper.php';
-include_once './library/Model.php';
-
-SetTimezone();
-
-$dbh = new DatabaseHelper();
-
-$user = new Model('user', ['email']);
-$user->key();
-$user->email('email');
-$user->password('password');
-$user->string('token', 40);
-$user->timestamp();
-
-$dbh->createTable($user);
+include_once 'init.php';
+include_once 'models.php';
 
 /*
 $env = Environment('mysql.host');

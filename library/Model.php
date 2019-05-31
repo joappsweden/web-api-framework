@@ -17,47 +17,93 @@ class Model
 
   public function key()
   {
-    // code...
+    $this->properties['id'] = [
+      'type' => 'int',
+      'characters' => 255,
+      'autoIncrement' => true,
+      'primaryKey' => true,
+      'property' => 'key'
+    ];
+
+    $this->properties['key_hashed'] = [
+      'type' => 'varchar',
+      'characters' => 40,
+      'property' => 'key_hashed'
+    ];
   }
 
   public function integer($name, $characters=255)
   {
-    // code...
+    $this->properties[$name] = [
+      'type' => 'int',
+      'characters' => $characters,
+      'property' => 'integer'
+    ];
   }
 
   public function string($name, $characters=250)
   {
-    // code...
+    $this->properties[$name] = [
+      'type' => 'varchar',
+      'characters' => $characters,
+      'property' => 'string'
+    ];
   }
 
   public function email($name)
   {
-    // code...
+    $this->properties[$name] = [
+      'type' => 'varchar',
+      'characters' => 250,
+      'property' => 'email'
+    ];
   }
 
   public function password($name)
   {
-    // code...
+    $this->properties[$name] = [
+      'type' => 'varchar',
+      'characters' => 250,
+      'property' => 'password'
+    ];
   }
 
   public function file($name)
   {
-    // code...
+    $this->properties[$name] = [
+      'type' => 'varchar',
+      'characters' => 250,
+      'property' => 'file'
+    ];
   }
 
   public function text($name)
   {
-    // code...
+    $this->properties[$name] = [
+      'type' => 'text',
+      'property' => 'text'
+    ];
   }
 
   public function datatime($name)
   {
-    // code...
+    $this->properties[$name] = [
+      'type' => 'datetime',
+      'property' => 'datatime'
+    ];
   }
 
   public function timestamp()
   {
-    // code...
+    $this->properties['createdAt'] = [
+      'type' => 'datetime',
+      'property' => 'createdAt'
+    ];
+
+    $this->properties['updatedAt'] = [
+      'type' => 'datetime',
+      'property' => 'updatedAt'
+    ];
   }
 }
 
