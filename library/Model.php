@@ -15,6 +15,21 @@ class Model
     $this->uniques = $uniques;
   }
 
+  public function getName()
+  {
+    return $this->name;
+  }
+
+  public function getUniques()
+  {
+    return $this->uniques;
+  }
+
+  public function getProperties()
+  {
+    return $this->properties;
+  }
+
   public function key()
   {
     $this->properties['id'] = [
