@@ -41,73 +41,97 @@ class Route
 
   public function post($acceptedFields, $rolesToAccess)
   {
-    if (Method() === 'post') {
-      if ($this->dbh->doesTableExists($this->controller)) {
-        if (count($this->data) > 0) {
-          echo 'post';
-        } else {
-          Response([
-            'error' => 'No data'
-          ]);
-        }
-      } else {
-        Response([
-          'error' => 'Model was not found'
-        ]);
-      }
-    }
-  }
-
-  public function get($fieldsToShow, $rolesToAccess)
-  {
-    if (Method() === 'get') {
-      if ($this->dbh->doesTableExists($this->controller)) {
-        if (isset($this->id)) {
-          echo 'get id';
-        } else {
-          echo 'get';
-        }
-      } else {
-        Response([
-          'error' => 'Model was not found'
-        ]);
-      }
-    }
-  }
-
-  public function put($acceptedFields, $rolesToAccess)
-  {
-    if (Method() === 'put') {
-      if ($this->dbh->doesTableExists($this->controller)) {
-        if (isset($this->id)) {
+    if (Access($rolesToAccess)) {
+      if (Method() === 'post') {
+        if ($this->dbh->doesTableExists($this->controller)) {
           if (count($this->data) > 0) {
-            echo 'put';
+            echo 'post';
           } else {
             Response([
               'error' => 'No data'
             ]);
           }
+        } else {
+          Response([
+            'error' => 'Model was not found'
+          ]);
         }
-      } else {
-        Response([
-          'error' => 'Model was not found'
-        ]);
       }
+    } else {
+      Response([
+        'error' => 'No access'
+      ]);
+    }
+  }
+
+  public function get($fieldsToShow, $rolesToAccess)
+  {
+    if (Access($rolesToAccess)) {
+      if (Method() === 'get') {
+        if ($this->dbh->doesTableExists($this->controller)) {
+          if (isset($this->id)) {
+            echo 'get id';
+          } else {
+            echo 'get';
+          }
+        } else {
+          Response([
+            'error' => 'Model was not found'
+          ]);
+        }
+      }
+    } else {
+      Response([
+        'error' => 'No access'
+      ]);
+    }
+  }
+
+  public function put($acceptedFields, $rolesToAccess)
+  {
+    if (Access($rolesToAccess)) {
+      if (Method() === 'put') {
+        if ($this->dbh->doesTableExists($this->controller)) {
+          if (isset($this->id)) {
+            if (count($this->data) > 0) {
+              echo 'put';
+            } else {
+              Response([
+                'error' => 'No data'
+              ]);
+            }
+          }
+        } else {
+          Response([
+            'error' => 'Model was not found'
+          ]);
+        }
+      }
+    } else {
+      Response([
+        'error' => 'No access'
+      ]);
     }
   }
 
   public function delete($rolesToAccess)
   {
-    if (Method() === 'delete') {
-      if ($this->dbh->doesTableExists($this->controller)) {
-        if (isset($this->id)) {
-          echo 'delete';
+    if (Access($rolesToAccess)) {
+      if (Method() === 'delete') {
+        if ($this->dbh->doesTableExists($this->controller)) {
+          if (isset($this->id)) {
+            echo 'delete';
+          }
+        } else {
+          Response([
+            'error' => 'Model was not found'
+          ]);
         }
-      } else {
-        Response([
-          'error' => 'Model was not found'
-        ]);
       }
+    } else {
+      Response([
+        'error' => 'No access'
+      ]);
     }
   }
 }
