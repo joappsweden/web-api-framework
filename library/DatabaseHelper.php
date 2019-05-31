@@ -126,11 +126,7 @@ class DatabaseHelper extends Database
     $labels = trim($labels, ", ");
 
     $sql = "INSERT INTO $table ($keys) VALUES ($labels);";
-    $insert = $this->query($sql, $data);
-
-    Response([
-      "result" => $insert
-    ]);
+    return  $this->query($sql, $data);
   }
 
   public function selectAll($table, $columns=[])
@@ -148,15 +144,13 @@ class DatabaseHelper extends Database
     }
 
     $sql = "SELECT $selectColumns FROM $table;";
-    $select = $this->query($sql);
-
-    Response($select);
+    return $this->query($sql);
   }
 
   public function selectById($table, $id)
   {
     if (is_numeric($id)) {
-      Response($this->selectByExactCondition($table, ['id' => $id]));
+      return $this->selectByExactCondition($table, ['id' => $id]);
     } else {
       Response([
         'error' => 'Id is not a number'
@@ -191,9 +185,7 @@ class DatabaseHelper extends Database
     }
 
     $sql = "SELECT $selectColumns FROM $table $whereConditions;";
-    $select = $this->query($sql, $conditions);
-
-    Response($select);
+    return $this->query($sql, $conditions);
   }
 
   public function selectBySearchCondition($table, $conditions, $columns=[])
@@ -216,17 +208,13 @@ class DatabaseHelper extends Database
       $conditions[$key] = "%$value%";
     }
 
-    $select = $this->query($sql, $conditions);
-
-    Response($select);
+    return $this->query($sql, $conditions);
   }
 
   public function updateById($table, $data, $id)
   {
     if (is_numeric($id)) {
-      Response([
-        'result' => $this->updateByConditions($table, $data, ['id' => $id])
-      ]);
+      return $this->updateByConditions($table, $data, ['id' => $id]);
     } else {
       Response([
         'error' => 'Id is not a number'
@@ -265,22 +253,14 @@ class DatabaseHelper extends Database
     }
 
     $sql = "UPDATE $table $settings $whereConditions;";
-    $update = $this->query($sql, array_merge($data, $conditions));
-
-    Response([
-      'result' => $update
-    ]);
+    return $this->query($sql, array_merge($data, $conditions));
   }
 
   public function deleteById($table, $id)
   {
     if (is_numeric($id)) {
       $sql = "DELETE FROM $table WHERE id = :id;";
-      $delete = $this->query($sql, ['id' => $id]);
-
-      Response([
-        'result' => $delete
-      ]);
+      return $this->query($sql, ['id' => $id]);
     } else {
       Response([
         'error' => 'Id is not a number'
