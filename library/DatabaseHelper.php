@@ -103,11 +103,7 @@ class DatabaseHelper extends Database
     $columns = trim($columns, ", ");
 
     $sql = "CREATE TABLE IF NOT EXISTS $table ($columns);";
-    $createTable = $this->query($sql);
-
-    Response([
-      "result" => $createTable
-    ]);
+    return $this->query($sql);
   }
 
   public function insert($table, $data)
