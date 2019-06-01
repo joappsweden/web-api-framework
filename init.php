@@ -17,6 +17,8 @@ include_once './library/SaveModels.php';
 include_once './library/GetModels.php';
 include_once './library/Token.php';
 include_once './library/Setup.php';
+include_once './library/Upload.php';
+include_once './library/GetUser.php';
 
 SetTimezone();
 Setup();

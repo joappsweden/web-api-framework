@@ -12,7 +12,7 @@ function Setup()
       $createSuperUser = $dbh->insert('user', [
         'email' => Environment('setup.super.email'),
         'password' => Environment('setup.super.password'),
-        'role' => 1
+        'role' => 0
       ]);
 
       if ($createSuperUser) {

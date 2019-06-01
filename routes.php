@@ -1,5 +1,7 @@
 <?php
 
+Upload([0]);
+
 $user = new Route('user');
 $user->get(['id', 'email'], [0]);
 $user->post(['email'], [1]);

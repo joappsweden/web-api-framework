@@ -6,6 +6,3 @@ DatabaseHelper
 - Create file
 - Read file by token -> path
 - Read file by path -> file
-
-Route (name)
-- Upload
