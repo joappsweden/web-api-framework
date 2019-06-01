@@ -66,12 +66,12 @@ class DatabaseHelper extends Database
             $this->createColumn($model->getName(), $column, $type, $newFields[$index]);
           }
         }
-
-        SaveModels($this->models);
       } else {
         $this->createTable($model);
       }
     }
+
+    SaveModels($this->models);
   }
 
   public function createTable(Model $model)
