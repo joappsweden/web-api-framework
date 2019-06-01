@@ -2,7 +2,5 @@ Web API framework
 Klasser & funktioner
 
 DatabaseHelper
-- Create file table
-- Create file
 - Read file by token -> path
 - Read file by path -> file
