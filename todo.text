@@ -13,9 +13,5 @@ DatabaseHelper
 - Read file by path -> file
 
 Route (name)
-- Get (fields to show, roles to access)
-- Post (fields to accept, roles to access)
-- Put (fields to accept, roles to access)
-- Delete (roles to access)
 - Token
 - Upload

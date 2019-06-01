@@ -40,11 +40,13 @@ class Model
       'property' => 'key'
     ];
 
+    /*
     $this->properties['id_hashed'] = [
       'type' => 'varchar',
       'characters' => 40,
       'property' => 'key_hashed'
     ];
+    */
   }
 
   public function integer($name, $characters=255)
