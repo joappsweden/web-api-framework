@@ -9,6 +9,8 @@ class Database
 
   function __construct()
   {
+    $this->connection = NULL;
+
     $host = Environment('mysql.host');
     $database = Environment('mysql.database');
     $username = Environment('mysql.username');

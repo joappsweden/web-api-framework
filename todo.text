@@ -2,13 +2,12 @@ Web API framework
 Klasser & funktioner
 
 DatabaseHelper
-// Gör detta i route
-- Read user by username and password -> token
-- Read user by token -> id or index
 - Create file table
 - Create file
 - Read file by token -> path
 - Read file by path -> file
+
+- Avoid duplicates
 
 Route (name)
 - Upload
