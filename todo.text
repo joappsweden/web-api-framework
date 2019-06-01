@@ -7,7 +7,5 @@ DatabaseHelper
 - Read file by token -> path
 - Read file by path -> file
 
-- Avoid duplicates
-
 Route (name)
 - Upload

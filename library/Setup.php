@@ -2,17 +2,9 @@
 
 function Setup()
 {
-  $models = GetModels();
-  $userModelExists = false;
+  $dbh = new DatabaseHelper();
 
-  foreach ($models as $model) {
-    if ($model->getName() === 'user') {
-      $userModelExists = true;
-      break;
-    }
-  }
-
-  if ($userModelExists) {
+  if ($dbh->doesTableExists('user')) {
     $dbh = new DatabaseHelper();
     $lookForUsers = $dbh->selectAll('user');
 

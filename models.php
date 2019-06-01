@@ -10,15 +10,15 @@ $user->string('token', 40);
 $user->integer('role', 1);
 $user->timestamp();
 
-$post = new Model('post');
-$post->key();
-$post->string('title');
-$post->file('photo');
-$post->text('body');
-$post->timestamp();
+$file = new Model('file');
+$file->key();
+$file->string('name');
+$file->file('path');
+$file->integer('userId');
+$file->timestamp();
 
 $dbh->addModel($user);
-$dbh->addModel($post);
+$dbh->addModel($file);
 $dbh->syncModelsWithDatabase();
 
 ?>
