@@ -3,7 +3,6 @@ Klasser & funktioner
 
 DatabaseHelper
 // Gör detta i route
-- Create user table
 - Create super user
 - Read user by username and password -> token
 - Read user by token -> id or index
@@ -13,5 +12,4 @@ DatabaseHelper
 - Read file by path -> file
 
 Route (name)
-- Token
 - Upload

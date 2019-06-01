@@ -184,10 +184,10 @@ class DatabaseHelper extends Database
       $whereConditions = "WHERE ";
 
       foreach ($conditions as $key => $value) {
-        $whereConditions .= "$key = :$key, ";
+        $whereConditions .= "$key = :$key && ";
       }
 
-      $whereConditions = trim($whereConditions, ", ");
+      $whereConditions = trim($whereConditions, " && ");
     }
 
     $sql = "SELECT $selectColumns FROM $table $whereConditions;";
@@ -204,10 +204,10 @@ class DatabaseHelper extends Database
       $whereConditions = "WHERE ";
 
       foreach ($conditions as $key => $value) {
-        $whereConditions .= "$key LIKE :$key, ";
+        $whereConditions .= "$key LIKE :$key && ";
       }
 
-      $whereConditions = trim($whereConditions, ", ");
+      $whereConditions = trim($whereConditions, " && ");
     }
 
     $sql = "SELECT $selectColumns FROM $table $whereConditions;";
@@ -261,10 +261,10 @@ class DatabaseHelper extends Database
       $whereConditions = "WHERE ";
 
       foreach ($conditions as $key => $value) {
-        $whereConditions .= "$key = :$key, ";
+        $whereConditions .= "$key = :$key && ";
       }
 
-      $whereConditions = trim($whereConditions, ", ");
+      $whereConditions = trim($whereConditions, " && ");
     }
 
     $sql = "UPDATE $table $settings $whereConditions;";
