@@ -42,7 +42,7 @@ class Route
   public function post($acceptedFields, $rolesToAccess)
   {
     if (Access($rolesToAccess)) {
-      if (Method() === 'post') {
+      if (Method() === 'post' && $this->name === $this->controller) {
         if ($this->dbh->doesTableExists($this->controller)) {
           if (count($this->data) > 0) {
             $post = $this->dbh->insert($this->controller, $this->data);
@@ -71,16 +71,16 @@ class Route
   public function get($fieldsToShow, $rolesToAccess)
   {
     if (Access($rolesToAccess)) {
-      if (Method() === 'get') {
+      if (Method() === 'get' && $this->name === $this->controller) {
         if ($this->dbh->doesTableExists($this->controller)) {
           if (isset($this->id)) {
-            $get = $this->dbh->selectById($this->controller, $this->id);
+            $get = $this->dbh->selectById($this->controller, $this->id, $fieldsToShow);
 
             Response([
               'result' => $get
             ]);
           } else {
-            $get = $this->dbh->selectAll($this->controller);
+            $get = $this->dbh->selectAll($this->controller, $fieldsToShow);
 
             Response([
               'result' => $get
@@ -102,7 +102,7 @@ class Route
   public function put($acceptedFields, $rolesToAccess)
   {
     if (Access($rolesToAccess)) {
-      if (Method() === 'put') {
+      if (Method() === 'put' && $this->name === $this->controller) {
         if ($this->dbh->doesTableExists($this->controller)) {
           if (isset($this->id)) {
             if (count($this->data) > 0) {
@@ -133,7 +133,7 @@ class Route
   public function delete($rolesToAccess)
   {
     if (Access($rolesToAccess)) {
-      if (Method() === 'delete') {
+      if (Method() === 'delete' && $this->name === $this->controller) {
         if ($this->dbh->doesTableExists($this->controller)) {
           if (isset($this->id)) {
             $delete = $this->dbh->deleteById($this->controller, $this->data);

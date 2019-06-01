@@ -151,10 +151,10 @@ class DatabaseHelper extends Database
     return $this->query($sql);
   }
 
-  public function selectById($table, $id)
+  public function selectById($table, $id, $columns=[])
   {
     if (is_numeric($id)) {
-      return $this->selectByExactCondition($table, ['id' => $id]);
+      return $this->selectByExactCondition($table, ['id' => $id], $columns);
     } else {
       Response([
         'error' => 'Id is not a number'
