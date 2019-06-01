@@ -18,7 +18,7 @@ function Upload($roles)
         $user = GetUser();
 
         $save = $dbh->insert('file', [
-          'name' => $orginal,
+          'name' => str_replace('.'.$extension, '', $orginal),
           'path' => './uploads/'.$hashed,
           'userId' => $user[0]['id']
         ]);
