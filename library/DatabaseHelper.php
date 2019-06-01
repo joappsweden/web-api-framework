@@ -112,6 +112,7 @@ class DatabaseHelper extends Database
 
   public function insert($table, $data)
   {
+    $this->doesDuplicatesExists($table, $data);
     $data = Validation($table, $data);
 
     if ($this->getColumn($table, 'createdAt') !== NULL) {
@@ -232,6 +233,7 @@ class DatabaseHelper extends Database
 
   public function updateByConditions($table, $data, $conditions)
   {
+    $this->doesDuplicatesExists($table, $data);
     $data = Validation($table, $data);
     $conditions = Validation($table, $conditions);
 
@@ -355,6 +357,37 @@ class DatabaseHelper extends Database
       foreach ($this->models as $model) {
         if ($model->getName() === $name) {
           return $model;
+        }
+      }
+    }
+  }
+
+  private function doesDuplicatesExists($name, $data)
+  {
+    $models = GetModels();
+    $currentModel = NULL;
+
+    foreach ($models as $model) {
+      if ($model->getName() === $name) {
+        $currentModel = $model;
+      }
+    }
+
+    if (isset($currentModel)) {
+      $uniques = $currentModel->getUniques();
+      $properties = $currentModel->getProperties();
+
+      foreach ($data as $key => $value) {
+        if (in_array($key, $uniques)) {
+          $result = $this->selectByExactCondition($name, [
+            $key => $value
+          ]);
+
+          if (count($result) > 0) {
+            Response([
+              'error' => $key . ' must be a unique value'
+            ]);
+          }
         }
       }
     }

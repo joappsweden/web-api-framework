@@ -1,9 +1,10 @@
 <?php
 
 $user = new Route('user');
-$user->get(['email'], [1]);
+$user->get(['id', 'email'], [0]);
 $user->post(['email'], [1]);
 $user->put(['email'], [1]);
+$user->put(['role'], [0]);
 $user->delete([1]);
 
 $post = new Route('post');

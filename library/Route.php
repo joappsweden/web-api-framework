@@ -42,7 +42,7 @@ class Route
   public function post($acceptedFields, $rolesToAccess)
   {
     if (Method() === 'post' && $this->name === $this->controller) {
-      if (Access($rolesToAccess)) {
+      if (Access($rolesToAccess) && $this->isAllowed($acceptedFields)) {
         if ($this->dbh->doesTableExists($this->controller)) {
           if (count($this->data) > 0) {
             $post = $this->dbh->insert($this->controller, $this->data);
@@ -102,7 +102,7 @@ class Route
   public function put($acceptedFields, $rolesToAccess)
   {
     if (Method() === 'put' && $this->name === $this->controller) {
-      if (Access($rolesToAccess)) {
+      if (Access($rolesToAccess) && $this->isAllowed($acceptedFields)) {
         if ($this->dbh->doesTableExists($this->controller)) {
           if (isset($this->id)) {
             if (count($this->data) > 0) {
@@ -122,10 +122,6 @@ class Route
             'error' => 'Model was not found'
           ]);
         }
-      } else {
-        Response([
-          'error' => 'No access'
-        ]);
       }
     }
   }
@@ -151,6 +147,15 @@ class Route
         Response([
           'error' => 'No access'
         ]);
+      }
+    }
+  }
+
+  private function isAllowed($fields)
+  {
+    if (isset($this->data)) {
+      foreach ($this->data as $key => $value) {
+        return in_array($key, $fields);
       }
     }
   }
