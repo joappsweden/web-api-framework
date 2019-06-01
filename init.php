@@ -16,8 +16,10 @@ include_once './library/Validation.php';
 include_once './library/SaveModels.php';
 include_once './library/GetModels.php';
 include_once './library/Token.php';
+include_once './library/Setup.php';
 
 SetTimezone();
+Setup();
 Token();
 
 ?>

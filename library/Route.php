@@ -41,8 +41,8 @@ class Route
 
   public function post($acceptedFields, $rolesToAccess)
   {
-    if (Access($rolesToAccess)) {
-      if (Method() === 'post' && $this->name === $this->controller) {
+    if (Method() === 'post' && $this->name === $this->controller) {
+      if (Access($rolesToAccess)) {
         if ($this->dbh->doesTableExists($this->controller)) {
           if (count($this->data) > 0) {
             $post = $this->dbh->insert($this->controller, $this->data);
@@ -60,18 +60,18 @@ class Route
             'error' => 'Model was not found'
           ]);
         }
+      } else {
+        Response([
+          'error' => 'No access'
+        ]);
       }
-    } else {
-      Response([
-        'error' => 'No access'
-      ]);
     }
   }
 
   public function get($fieldsToShow, $rolesToAccess)
   {
-    if (Access($rolesToAccess)) {
-      if (Method() === 'get' && $this->name === $this->controller) {
+    if (Method() === 'get' && $this->name === $this->controller) {
+      if (Access($rolesToAccess)) {
         if ($this->dbh->doesTableExists($this->controller)) {
           if (isset($this->id)) {
             $get = $this->dbh->selectById($this->controller, $this->id, $fieldsToShow);
@@ -91,18 +91,18 @@ class Route
             'error' => 'Model was not found'
           ]);
         }
+      } else {
+        Response([
+          'error' => 'No access'
+        ]);
       }
-    } else {
-      Response([
-        'error' => 'No access'
-      ]);
     }
   }
 
   public function put($acceptedFields, $rolesToAccess)
   {
-    if (Access($rolesToAccess)) {
-      if (Method() === 'put' && $this->name === $this->controller) {
+    if (Method() === 'put' && $this->name === $this->controller) {
+      if (Access($rolesToAccess)) {
         if ($this->dbh->doesTableExists($this->controller)) {
           if (isset($this->id)) {
             if (count($this->data) > 0) {
@@ -122,18 +122,18 @@ class Route
             'error' => 'Model was not found'
           ]);
         }
+      } else {
+        Response([
+          'error' => 'No access'
+        ]);
       }
-    } else {
-      Response([
-        'error' => 'No access'
-      ]);
     }
   }
 
   public function delete($rolesToAccess)
   {
-    if (Access($rolesToAccess)) {
-      if (Method() === 'delete' && $this->name === $this->controller) {
+    if (Method() === 'delete' && $this->name === $this->controller) {
+      if (Access($rolesToAccess)) {
         if ($this->dbh->doesTableExists($this->controller)) {
           if (isset($this->id)) {
             $delete = $this->dbh->deleteById($this->controller, $this->data);
@@ -147,11 +147,11 @@ class Route
             'error' => 'Model was not found'
           ]);
         }
+      } else {
+        Response([
+          'error' => 'No access'
+        ]);
       }
-    } else {
-      Response([
-        'error' => 'No access'
-      ]);
     }
   }
 }

@@ -13,10 +13,10 @@ function Token()
     if ($dbh->doesTableExists('user')) {
       if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $user = $dbh->selectByExactCondition('user', [
-          'email' => $email,
-          'password' => sha1($password)
+          'email' => $email
         ],[
-          'id'
+          'id',
+          'password'
         ]);
 
         if (count($user) === 1) {
