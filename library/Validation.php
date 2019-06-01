@@ -36,6 +36,8 @@ function Validation($table, $data)
             $data[$key] = date('Y-m-d H:i:s');
           } elseif ($property[$key]['property'] === 'updatedAt') {
             $data[$key] = date('Y-m-d H:i:s');
+          } elseif ($property[$key]['property'] === 'text') {
+            $data[$key] = nl2br($value);
           } elseif ($property[$key]['property'] === 'file') {
             $environmentUploadExtensions = Environment('upload.extensions');
             $extensions = explode(',', $environmentUploadExtensions);
