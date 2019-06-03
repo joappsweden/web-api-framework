@@ -153,11 +153,15 @@ class Route
 
   private function isAllowed($fields)
   {
-    if (isset($this->data)) {
-      foreach ($this->data as $key => $value) {
-        return in_array($key, $fields);
+    foreach ($this->data as $key => $value) {
+      foreach ($fields as $field) {
+        if ($key !== $field) {
+          return false;
+        }
       }
     }
+
+    return true;
   }
 }
 
